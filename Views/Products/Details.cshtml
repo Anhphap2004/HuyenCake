@@ -1,0 +1,68 @@
+﻿@model Product
+
+<div class="container py-5">
+    <div class="row g-5 align-items-center">
+        <!-- Hình ảnh bánh -->
+        <div class="col-lg-6">
+            <div class="bg-light rounded-4 shadow-sm overflow-hidden">
+                <img src="~/assets/img/products/@Model.Image" class="img-fluid w-100" alt="@Model.Name">
+            </div>
+        </div>
+
+        <!-- Thông tin bánh -->
+        <div class="col-lg-6">
+            <h2 class="text-uppercase fw-bold">@Model.Name</h2>
+            <h4 class="text-primary my-3">@Model.Price?.ToString("N0") VNĐ</h4>
+
+            <div class="mb-3">
+                <span class="badge bg-warning text-dark fs-6">@Model.ProductCategory?.Name</span>
+            </div>
+
+            <p class="text-muted">@Model.Description</p>
+
+            <form method="post" action="/Cart/AddToCart" class="mt-4">
+                <input type="hidden" name="productId" value="@Model.ProductId" />
+                <div class="d-flex align-items-center mb-3">
+                    <label for="quantity" class="me-2 mb-0 fw-bold">Số lượng:</label>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control w-25" />
+                </div>
+                <button type="submit" class="btn btn-outline-primary btn-lg px-4">
+                    <i class="fa fa-shopping-cart me-2"></i> Thêm vào giỏ
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Gạch phân cách -->
+    <hr class="my-5">
+
+    <!-- Mô tả thêm -->
+    <div class="row">
+        <div class="col-12">
+            <h4 class="text-uppercase mb-3 fw-semibold">Mô tả chi tiết</h4>
+            <p class="fs-5 text-secondary" style="line-height: 1.8;">
+                @Model.Description
+            </p>
+        </div>
+    </div>
+</div>
+<style>
+    .product-detail h2 {
+        font-family: 'Playfair Display', serif;
+        letter-spacing: 1px;
+    }
+
+    .product-detail .btn-outline-primary:hover {
+        background-color: #ffb6b9;
+        color: #fff;
+        border-color: #ffb6b9;
+    }
+
+    .product-detail img {
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .product-detail img:hover {
+            transform: scale(1.05);
+        }
+</style>
