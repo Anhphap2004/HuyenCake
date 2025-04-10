@@ -1,0 +1,60 @@
+﻿@{
+    List<ProductCategory> productCategory = ViewBag.productCategory;
+}
+
+<div class="container-fluid about py-5">
+    <div class="container">
+        <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
+            <h2 class="text-primary font-secondary">Menu & Pricing</h2>
+            <h1 class="display-4 text-uppercase">Explore Our Cakes</h1>
+        </div>
+
+        <div class="tab-class text-center">
+            <ul id="category-tabs" class="nav nav-pills d-inline-flex justify-content-center bg-dark text-uppercase border-inner p-4 mb-5">
+                @foreach (var h in productCategory)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white"
+                           href="#"
+                           data-category-id="@h.ProductCategoryId">
+                            @h.Name
+                        </a>
+                    </li>
+                }
+            </ul>
+
+            <div id="products-container">
+                @await Component.InvokeAsync("Products")
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#category-tabs a').on('click', function (e) {
+                e.preventDefault();
+
+                // Bỏ active cũ
+                $('#category-tabs a').removeClass('active');
+
+                // Thêm active mới
+                $(this).addClass('active');
+
+                // Lấy ID danh mục
+                var categoryId = $(this).data('category-id');
+
+                // Gọi AJAX để lấy component
+                $.ajax({
+                    url: '/Products/LoadByCategory',
+                    type: 'GET',
+                    data: { categoryId: categoryId },
+                    success: function (result) {
+                        $('#products-container').html(result);
+                    }
+                });
+            });
+        });
+    </script>
+}

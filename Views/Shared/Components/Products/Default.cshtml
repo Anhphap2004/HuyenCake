@@ -1,0 +1,32 @@
+﻿@model IEnumerable<HuyenCake.Models.Product>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active p-0">
+        <div class="row g-3">
+            @if (Model.Any())
+            {
+                foreach (var h in Model)
+                {
+                    <div class="col-lg-6">
+                        <div class="d-flex h-100">
+                            <div class="flex-shrink-0">
+                                <img class="img-fluid" src="~/assets/img/products/@h.Image" alt="@h.Name" style="width: 150px; height: 85px;">
+                                <h4 class="bg-dark text-primary p-2 m-0">@h.Price?.ToString("N0")</h4>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center text-start bg-secondary border-inner px-4">
+                                <h5 class="text-uppercase">@h.Name</h5>
+                                <span>Đọc Thêm</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="text-muted">Không có sản phẩm trong danh mục này...</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
